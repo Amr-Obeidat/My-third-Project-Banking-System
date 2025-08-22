@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include <cstdlib>  // for rand()
+#include <cstdlib> 
 #include <cmath>
 #include<vector>
 #include<iomanip>
@@ -33,7 +33,7 @@ bool CheckIfClientExistByAccountNumber(string AccountNumber);
 string ReadPinCode() {
     string PinCode;
     while (true) {
-        PinCode = ReadString("Enter the client PIN (4 digits): ");
+        PinCode = ReadString("Enter the PIN (4 digits): ");
 
         // Check length and ensure all characters are digits
         if (PinCode.length() == 4 && all_of(PinCode.begin(), PinCode.end(), ::isdigit)) {
@@ -321,6 +321,9 @@ void DeleteClientInfo() {
          ProceedToDeletClientInfo(ClientAccountNumber);
          cout << "\nClient deleted successfully.\n";
      }
+     else {
+         cout << "The Deletion was cancelled\n";
+     }
  }
  else {
      cout << "\aUser with (" << ClientAccountNumber << ") AccountNumber was not found \n";
@@ -371,6 +374,9 @@ void UpdateClientInfo() {
 
             cout << "\n Client Info was updated successful : ";
 
+        }
+        else {
+            cout << "The Updating Operation was cancelled\n";
         }
     }
         else {
@@ -441,6 +447,9 @@ void ProceedToDeposit( string accountnumber) {
         cout << "Deposit done successfully\n";
 
     }
+    else {
+        cout << "\nThe Deposit Operation was cancelled ";
+    }
 
 
 
@@ -479,7 +488,7 @@ void Deposit() {
 /////////////////// Deposit
 
 ///////////////withdraw
-void WithDrawlTheMoney(string accounnumber, float  WithDrawlAmount) {
+void WithDrawlTheMoney(string accounnumber, float  &WithDrawlAmount) {
     vector<stClientInfo>AllInfo = ExtractClientsDataFromFile();
     for (auto it = AllInfo.begin(); it != AllInfo.end();) {
         if (it->AccountNumber == accounnumber) {
@@ -512,6 +521,10 @@ void ProccedToWithDrawl(string AccountNumber) {
     if (condition == 'y' || condition == 'Y') {
         WithDrawlTheMoney(AccountNumber, WithDraw);
         cout << "Withdrawl completed successfully\n";
+    }
+    else {
+        cout << "\nThe withdrawl Operation was cancelled ";
+
     }
 
 
@@ -595,58 +608,75 @@ stClientInfo GetDestinationClient(string AccountNumber) {
         cout << "CLient with (" << AccountNumber << ") account number was not found : \n";
     }
 }
-void DoTheTransformation(string SourceAccount,string DestinationAccount, float Amount) {
-    DepositTheMoney(DestinationAccount, Amount);
-    WithDrawlTheMoney(SourceAccount, Amount);
-    cout << "Transaction done successfully\n";
-
-}
-void ProccedToTrasnfer(stClientInfo SourceClient) {
-    int numberoftries = 3;
-   
-    string SourcePinCode = "";
-    do {
-        cout << "Enter Your Pin Code: ";
-        SourcePinCode = ReadPinCode();
-
-        if (SourcePinCode == SourceClient.PinCode) {
-           
-            break;
-        }
-
-        cout << "Wrong PIN \a\n";
-        numberoftries--;
-        cout << "You have " << numberoftries << " Tries\n";
-    } while (numberoftries > 0);
-
-    if (numberoftries == 0 && SourcePinCode != SourceClient.PinCode) {
-        cout << "No attempts left. Access denied.\n";
+void DoTheTransformation(stClientInfo& SourceClient, stClientInfo& DestinationClient, float Amount=0) {
+    Amount = ReadPositiveNumber("Enter the transaction amonut : ");
+    cout << "The Desination Account Name is " << DestinationClient.Name << "\n";
+    cout << "Are you sure you want to do the transaction (y,n) :";
+    char condition = ' ';
+    cin >> condition;
+    if(condition=='y'||condition=='Y')
+    {
+        WithDrawlTheMoney(SourceClient.AccountNumber, Amount);
+        DepositTheMoney(DestinationClient.AccountNumber, Amount);
     }
     else {
-        string DestinationAccountNumber = ReadString("Enter The Destination Account Number :");
-        float Amount = ReadPositiveNumber("Enter the transformation amount :");
-        stClientInfo DestinationClient = GetDestinationClient(DestinationAccountNumber);
-        cout << "The Destination Client is : ";
-        cout << DestinationClient.Name << "\n";
-        cout << "Are you sure you want to transfer(y/n) : ";
-        char condition = ' ';
-        cin >> condition;
-        if (condition == 'y' || condition == 'Y') {
-            DoTheTransformation(SourceClient.AccountNumber, DestinationClient.AccountNumber,Amount);
-        }
+        cout << "\nThe Transaction Operation canceled.\n";
     }
+}
+void ValidTransformationsInfo(stClientInfo& SourceClient, stClientInfo& DestinationClient) {
+    short NumberOfTries = 3;
+   
+    string Pin;
+
+    cout << "Enter your pin : \n";
+
+    do {
+        Pin = ReadPinCode();
+
+        if (Pin == SourceClient.PinCode) {
+            DoTheTransformation(SourceClient, DestinationClient);
+            break; 
+        }
+
+        NumberOfTries--; 
+        cout << "\a\nWrong Pin !";
+
+        if (NumberOfTries > 0) {
+            cout << "\nYou have " << NumberOfTries << " more tries\n";
+        }
+        else {
+            cout << "\nNo more tries left. Access denied!\n";
+        }
+
+    } while (NumberOfTries > 0);
 
 
 }
-void Transfer() {
+void Transformations() {
     PrintLines(60);
-    PrintMiddle("Transmission window ", 60);
+    PrintMiddle("Transaction window  ", 60);
     PrintLines(60);
-    cout << "\n";
-    string SourceClientAccountNumber = ReadString("Enter The Source Client Account Number : ");
-  stClientInfo SourceClient=  GetSourceClient(SourceClientAccountNumber);
-  ProccedToTrasnfer(SourceClient);
-
+    stClientInfo SourceClient;
+    stClientInfo DestinationClient;
+    string SourceAccountNumber = ReadString("Enter the source client account number : ");
+    bool FoundSource = CheckIfClientExistByAccountNumber(SourceAccountNumber);
+    if (FoundSource) {
+      SourceClient=ReturnTheClient(SourceAccountNumber);
+    }
+    else {
+        cout << "CLient with (" << SourceAccountNumber << ") account number was not found : \n";
+        return;
+    }
+    string DestinationAccountNumber = ReadString("Enter the Destination client account number : ");
+    bool foundDestination = CheckIfClientExistByAccountNumber(DestinationAccountNumber);
+    if (foundDestination) {
+      DestinationClient=ReturnTheClient(DestinationAccountNumber);
+    }
+    else {
+        cout << "CLient with (" << DestinationAccountNumber << ") account number was not found : \n";
+        return;
+    }
+    ValidTransformationsInfo(SourceClient, DestinationClient);
  }
 
 /////////////////// Tansactions
@@ -689,7 +719,7 @@ void StartTransaction() {
         case enTransactions::enTotalBalances:
             PrintTotalBalnces(); break;
         case enTransactions::enTransmission:
-       Transfer(); break;
+       Transformations(); break;
 
         }
         

@@ -1,6 +1,6 @@
 ﻿  Banking System.cpp
 C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(13,9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(156,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(597,1): warning C4715: 'GetDestinationClient': not all control paths return a value
-C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(586,1): warning C4715: 'GetSourceClient': not all control paths return a value
+C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(599,1): warning C4715: 'GetSourceClient': not all control paths return a value
+C:\Users\PC\source\repos\Banking System\Banking System\Banking System.cpp(610,1): warning C4715: 'GetDestinationClient': not all control paths return a value
   Banking System.vcxproj -> C:\Users\PC\source\repos\Banking System\x64\Debug\Banking System.exe
