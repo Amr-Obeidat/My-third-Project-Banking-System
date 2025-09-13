@@ -1,0 +1,13 @@
+﻿  ATM Extension.cpp
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\Amr.h(349,39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'ATM%20Extension.cpp')
+  
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\Amr.h(461,30): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
+  (compiling source file 'ATM%20Extension.cpp')
+  
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\ATM Extension.cpp(28,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\ATM Extension.cpp(267,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\ATM Extension.cpp(269,34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\ATM Extension.cpp(301,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\PC\source\repos\ATM Extension\ATM Extension\Amr.h(504,1): warning C4715: 'Amr::GetTheMonthName': not all control paths return a value
+  ATM Extension.vcxproj -> C:\Users\PC\source\repos\ATM Extension\x64\Debug\ATM Extension.exe
