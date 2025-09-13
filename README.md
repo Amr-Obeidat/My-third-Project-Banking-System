@@ -24,6 +24,14 @@ Notes
 
 Existence checks prevent actions on non-existent clients.
 
+
+
+
+My Third Project: Banking System (Extended Version)
+
+This is an upgraded extension of my third C++ Banking System project.  
+It adds role-based user management and permissions, allowing bank employees to perform operations based on their assigned roles.  
+All previous features from the original project are preserved and enhanced.
 Some functions read the file multiple times — can be optimized by loading all clients once.
 
 Input is validated via the Amr library.
