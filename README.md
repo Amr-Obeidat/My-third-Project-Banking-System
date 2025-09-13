@@ -30,3 +30,7 @@ Input is validated via the Amr library.
 
  I could have used maps/sets for faster searches and uniqueness, but this project is kept simple for practice purposes.
 
+
+## ATM Extension
+Folder: ATM-Extension/
+Description: ATM interface for Banking System — PIN login, withdraw/deposit, check balance.
