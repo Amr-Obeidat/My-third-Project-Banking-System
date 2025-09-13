@@ -1,0 +1,11 @@
+# Visual Studio / C++ build artifacts
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.log
+*.suo
+.vs/
+x64/Debug/
+Debug/
+Release/
